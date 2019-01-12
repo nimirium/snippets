@@ -10,6 +10,7 @@ logger.setLevel(logging.INFO)
 class Request:
     def __init__(self, url, method='GET', headers=None, data=None, return_response=True):
         """
+        Describes a http request.
         :param str url:
         :param str method:
         :param dict headers:
@@ -21,10 +22,17 @@ class Request:
         self.method = method
         self.headers = headers
         self.data = data
-        self.return_response = return_response  # will only return responses with
+        self.return_response = return_response
 
 
 def send_parallel_http_requests(requests_list):
+    """
+    Send a list of parallel HTTP requests.
+
+    :param list requests_list: list of RequestInfo objects
+    :return: a list of `requests.models.Response`.
+    """
+
     assert type(requests_list) is list, "requests_list must be a list"
     for r in requests_list:
         assert type(r) is Request, "Each item in requests_list must be a Request."
@@ -44,10 +52,10 @@ def send_parallel_http_requests(requests_list):
                 req_kwargs['data'] = r.data
             try:
                 sr = session.request(**req_kwargs)
+                if r.return_response:
+                    requests_waiting_for_response.append(sr)
             except:
                 logger.exception("Sending request failed")
-            if r.return_response:
-                requests_waiting_for_response.append(sr)
 
         responses = []
         for x in requests_waiting_for_response:

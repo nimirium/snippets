@@ -15,9 +15,6 @@ class ParallelHttpRequestTestCase(unittest.TestCase):
             }, return_response=True),
         ])
 
-        print(f"RESPONSES!")
-        print(f"{responses}")
-
         for r in responses:
             print(f"url: {r.url}")
             print(f"status code: {r.status_code}")
