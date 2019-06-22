@@ -103,3 +103,6 @@ venv36/
 
 # mypy
 .mypy_cache/
+
+# pycharm .idea
+.idea
