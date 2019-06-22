@@ -1,14 +1,22 @@
 #!/bin/bash
 
-python_v="/usr/bin/python36"
+PYTHON_V="/usr/bin/python36"
 
-read -p "venv name: " venv_name
+if [[ $1 ]]
+then
+    venv_name=$1
+else
+    read -p "venv name: " venv_name
+fi
 
-virtualenv -p ${python_v} ${venv_name}
+#echo "venv name from input: $venv_name"
 
-read -n 1 -p "install requirements file [y/n]? " yn
+virtualenv -p ${PYTHON_V} ${venv_name}
 
-if [[ ${yn} == "y" ]]
+read -n 1 -p "
+Install requirements file [y/n]? " install_req_file
+
+if [[ ${install_req_file} == "y" ]]
 then
     read -p "
     requirements file path: " file_path
@@ -16,9 +24,10 @@ then
     ${venv_name}/bin/pip install -r ${file_path}
 fi
 
-read -n 1 -p "install libraries [y/n]? " yn
+read -n 1 -p "
+Install libraries [y/n]? " install_lib
 
-if [[ ${yn} == "y" ]]
+if [[ ${install_lib} == "y" ]]
 then
     read -p "
     Please input library, with or without version: " lib_name
@@ -26,4 +35,4 @@ then
     ${venv_name}/bin/pip install ${lib_name}
 fi
 
-echo "Done! created virtual environment in $venv_name, using python version $python_v"
+echo "Done! Created virtual environment $venv_name, using python version $PYTHON_V"
