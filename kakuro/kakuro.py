@@ -1,6 +1,8 @@
 from copy import deepcopy
 from typing import List
 
+from kakuro.cheat_sheet import cheat_sheet
+
 
 def is_solved(board):
     print(f"Checking if board is solved...")
@@ -34,7 +36,7 @@ def _get_cells(row, si):
 def _get_allowed_numbers(sum: int, n: int) -> List[int]:
     if n == 1:
         return [sum]
-    return
+    return cheat_sheet[n][sum]
 
 
 def _get_possible_values_for_cells(sum, cells):
