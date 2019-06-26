@@ -1,4 +1,5 @@
 from copy import deepcopy
+from typing import List
 
 
 def is_solved(board):
@@ -30,7 +31,14 @@ def _get_cells(row, si):
     return cell_groups[si]
 
 
-def _get_possible_values(sum, cells):
+def _get_allowed_numbers(sum: int, n: int) -> List[int]:
+    if n == 1:
+        return [sum]
+    return
+
+
+def _get_possible_values_for_cells(sum, cells):
+    allowed_numbers = _get_allowed_numbers(sum, len(cells))
     possible_solutions = []
     done = False
     while not done:
@@ -48,6 +56,6 @@ def solve(board, sums_horizontal, sums_vertical):
             for sum_i, h_sum in enumerate(h_row_sums):
                 row = board[i]
                 cells = _get_cells(row, sum_i)
-                possible_values = _get_possible_values(h_sum, cells)
+                possible_values = _get_possible_values_for_cells(h_sum, cells)
 
     print(f"Board is unsolveable!")

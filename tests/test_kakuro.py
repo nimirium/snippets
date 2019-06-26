@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from kakuro.kakuro import solve, is_solved, _get_cell_groups, _get_possible_values
+from kakuro.kakuro import solve, is_solved, _get_cell_groups, _get_possible_values_for_cells, _get_allowed_numbers
 
 
 board1 = [
@@ -49,5 +49,8 @@ class KakuroSolverTestCase(TestCase):
         result = _get_cell_groups(row)
         self.assertEqual(expected, result)
 
-    def test_get_possible_values(self):
-        self.assertEqual([[8, 9], [8, 9]], _get_possible_values([0, 0], 17))
+    def test_get_possible_values_for_cells(self):
+        self.assertEqual([[8, 9], [8, 9]], _get_possible_values_for_cells([0, 0], 17))
+
+    def test_get_allowed_numbers(self):
+        self.assertEqual([8, 9], _get_allowed_numbers(17, 2))
