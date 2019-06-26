@@ -41,12 +41,15 @@ def _get_allowed_numbers(sum: int, n: int) -> List[int]:
 
 def _get_possible_values_for_cells(sum, cells):
     allowed_numbers = _get_allowed_numbers(sum, len(cells))
-    possible_solutions = []
-    done = False
-    while not done:
-        possible_solution = deepcopy(cells)
-        # TODO: continue
-
+    new_cells = []
+    for c in cells:
+        new_c = c
+        if c == 0:
+            new_c = allowed_numbers
+        elif isinstance(c, list):
+            new_c = [n for n in c if n in allowed_numbers]
+        new_cells.append(new_c)
+    return new_cells
 
 def solve(board, sums_horizontal, sums_vertical):
     print(f"Solving board...")

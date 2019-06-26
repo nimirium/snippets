@@ -50,7 +50,9 @@ class KakuroSolverTestCase(TestCase):
         self.assertEqual(expected, result)
 
     def test_get_possible_values_for_cells(self):
-        self.assertEqual([[8, 9], [8, 9]], _get_possible_values_for_cells([0, 0], 17))
+        self.assertEqual([[8, 9], [8, 9]], _get_possible_values_for_cells(17, [0, 0]))
+        self.assertEqual([[1, 2, 3, 4], [1, 2, 3, 4]], _get_possible_values_for_cells(5, [0, 0]))
 
     def test_get_allowed_numbers(self):
         self.assertEqual([8, 9], _get_allowed_numbers(17, 2))
+        self.assertEqual([1, 2, 3, 4], _get_allowed_numbers(5, 2))
