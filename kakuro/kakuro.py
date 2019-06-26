@@ -51,6 +51,18 @@ def _get_possible_values_for_cells(sum, cells):
         new_cells.append(new_c)
     return new_cells
 
+
+def _set_cells(board, row_i, group_i, possible_values):
+    # TODO: not sure it works, need to test
+    def _get_start_index(ri, gi):
+        raise NotImplementedError
+
+    start_index = _get_start_index(row_i, group_i)
+    for j in range(start_index, len(possible_values)):
+        pv_i = start_index - j
+        board[row_i][j] = possible_values[pv_i]
+
+
 def solve(board, sums_horizontal, sums_vertical):
     print(f"Solving board...")
     solved_something = True
@@ -62,5 +74,8 @@ def solve(board, sums_horizontal, sums_vertical):
                 row = board[i]
                 cells = _get_cells(row, sum_i)
                 possible_values = _get_possible_values_for_cells(h_sum, cells)
+                if cells != possible_values:
+                    solved_something = True
+                _set_cells(board, i, sum_i, possible_values)
 
     print(f"Board is unsolveable!")
