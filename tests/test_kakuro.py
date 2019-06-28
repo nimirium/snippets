@@ -1,6 +1,8 @@
+from copy import deepcopy
 from unittest import TestCase
 
-from kakuro.kakuro import solve, is_solved, _get_cell_groups, _get_possible_values_for_cells, _get_allowed_numbers
+from kakuro.kakuro import solve, is_solved, _get_cell_groups, _get_possible_values_for_cells, _get_allowed_numbers, \
+    _set_cell_horizontal, _get_start_index_of_group
 
 
 board1 = [
@@ -52,7 +54,45 @@ class KakuroSolverTestCase(TestCase):
     def test_get_possible_values_for_cells(self):
         self.assertEqual([[8, 9], [8, 9]], _get_possible_values_for_cells(17, [0, 0]))
         self.assertEqual([[1, 2, 3, 4], [1, 2, 3, 4]], _get_possible_values_for_cells(5, [0, 0]))
+        vals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        self.assertEqual([vals, vals, vals], _get_possible_values_for_cells(11, [0, 0, 0]))
 
     def test_get_allowed_numbers(self):
         self.assertEqual([8, 9], _get_allowed_numbers(17, 2))
         self.assertEqual([1, 2, 3, 4], _get_allowed_numbers(5, 2))
+        self.assertEqual([1, 2, 3, 4, 5, 6, 7, 8, 9], _get_allowed_numbers(11, 3))
+
+    def test_get_start_index_of_group(self):
+        self.assertEqual(1, _get_start_index_of_group(['x', 1, 2], 0))
+        self.assertEqual(0, _get_start_index_of_group([1, 2, 'x'], 0))
+        self.assertEqual(3, _get_start_index_of_group([1, 2, 'x', 3, 4, 'x'], 1))
+        self.assertEqual(6, _get_start_index_of_group([1, 2, 'x', 3, 4, 'x', 5], 2))
+
+
+    def test_set_cells1(self):
+        board = deepcopy(board1)
+        row = 3
+        group_number = 0
+        possible_values = [[8, 9], [8, 9]]
+        board = _set_cell_horizontal(board, row, group_number, possible_values)
+        expected = [
+            ['x', 'x', 0, 0],
+            ['x', 0, 0, 0],
+            [0, 0, 0, 'x'],
+            [[8, 9], [8, 9], 'x', 'x'],
+        ]
+        self.assertEqual(expected, board)
+
+    def test_set_cells2(self):
+        board = deepcopy(board1)
+        row = 0
+        group_number = 0
+        possible_values = [2, 9]
+        board = _set_cell_horizontal(board, row, group_number, possible_values)
+        expected = [
+            ['x', 'x', 2, 9],
+            ['x', 0, 0, 0],
+            [0, 0, 0, 'x'],
+            [0, 0, 'x', 'x'],
+        ]
+        self.assertEqual(expected, board)

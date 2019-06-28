@@ -1,6 +1,5 @@
 import logging
 from itertools import compress, product
-from pprint import pprint
 from typing import List, Dict
 
 
@@ -25,4 +24,5 @@ def generate_cheat_sheet() -> Dict[int, Dict[int, List[int]]]:
 
 cheat_sheet = generate_cheat_sheet()
 
-logging.debug(cheat_sheet)
+logging.info("cheat_sheet: ")
+logging.info(cheat_sheet)
