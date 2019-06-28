@@ -18,7 +18,7 @@ def generate_cheat_sheet() -> Dict[int, Dict[int, List[int]]]:
                 cheat_sheet[n] = {}
             if not cheat_sheet[n].get(s):
                 cheat_sheet[n][s] = []
-            cheat_sheet[n][s] = sorted(cheat_sheet[n][s] + list(c))
+            cheat_sheet[n][s] = sorted(list(set(cheat_sheet[n][s] + list(c))))
     return cheat_sheet
 
 

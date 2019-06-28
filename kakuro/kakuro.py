@@ -1,5 +1,4 @@
 from copy import deepcopy
-from pprint import pprint
 from typing import List
 
 from kakuro.cheat_sheet import cheat_sheet
@@ -9,8 +8,10 @@ def is_solved(board):
     print(f"Checking if board is solved...")
     for row in board:
         for cell in row:
-            if cell != 'x' and cell == 0:
+            if cell == 0 or (isinstance(cell, list) and len(cell) > 1):
+                print(f"Board is NOT solved")
                 return False
+    print(f"Board is solved")
     return True
 
 
@@ -116,6 +117,7 @@ def solve(board, sums_horizontal, sums_vertical):
     print_board(board)
     solved_something = True
     while not is_solved(board) and solved_something:
+        print(f"entered while loop.")
         solved_something = False  # If we didn't solve anything the last time, stop and quit.
 
         for row_i, h_row_sums in enumerate(sums_horizontal):
@@ -123,7 +125,7 @@ def solve(board, sums_horizontal, sums_vertical):
             for sum_i, h_sum in enumerate(h_row_sums):
                 row = board[row_i]
                 cells = _get_cells(row, sum_i)
-                possible_values = _get_possible_values_for_cells(h_sum, cells)
+                possible_values = _get_possible_values_for_cells(h_sum, deepcopy(cells))
                 if cells != possible_values:
                     solved_something = True
                 board = _set_cell_horizontal(board, row_i, sum_i, possible_values)
@@ -136,10 +138,12 @@ def solve(board, sums_horizontal, sums_vertical):
             for sum_i, v_sum in enumerate(v_row_sums):
                 col = [row[col_i] for row in board]
                 cells = _get_cells(col, sum_i)
-                possible_values = _get_possible_values_for_cells(v_sum, cells)
+                possible_values = _get_possible_values_for_cells(v_sum, deepcopy(cells))
                 if cells != possible_values:
                     solved_something = True
                 board = _set_cell_vertical(board, col_i, sum_i, possible_values)  # <--- vertical
                 print_board(board)
+
+        print(f"\nFinished one while iteration. board=\n{board}")
 
     print(f"Board is unsolveable!")

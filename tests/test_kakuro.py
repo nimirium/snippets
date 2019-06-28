@@ -27,6 +27,13 @@ class KakuroSolverTestCase(TestCase):
         result = is_solved(board1)
         self.assertFalse(result)
 
+        board2 = [['x', 'x', [2, 3, 4, 5, 6, 7, 8], [7, 9]],
+                  ['x', [3, 4, 5, 6, 7, 8], [7, 8], [7]],
+                  [[7, 9], [8, 9], [1, 2, 3, 4, 5, 6, 7, 8], 'x'],
+                  [[9], [7, 8, 9], 'x', 'x']]
+        self.assertFalse(is_solved(board2))
+
+
         result = is_solved(solution1)
         self.assertTrue(result)
 
@@ -54,13 +61,14 @@ class KakuroSolverTestCase(TestCase):
     def test_get_possible_values_for_cells(self):
         self.assertEqual([[8, 9], [8, 9]], _get_possible_values_for_cells(17, [0, 0]))
         self.assertEqual([[1, 2, 3, 4], [1, 2, 3, 4]], _get_possible_values_for_cells(5, [0, 0]))
-        vals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        vals = [1, 2, 3, 4, 5, 6, 7, 8]
         self.assertEqual([vals, vals, vals], _get_possible_values_for_cells(11, [0, 0, 0]))
 
     def test_get_allowed_numbers(self):
         self.assertEqual([8, 9], _get_allowed_numbers(17, 2))
         self.assertEqual([1, 2, 3, 4], _get_allowed_numbers(5, 2))
-        self.assertEqual([1, 2, 3, 4, 5, 6, 7, 8, 9], _get_allowed_numbers(11, 3))
+        result = _get_allowed_numbers(11, 3)
+        self.assertEqual([1, 2, 3, 4, 5, 6, 7, 8], result)
 
     def test_get_start_index_of_group(self):
         self.assertEqual(1, _get_start_index_of_group(['x', 1, 2], 0))
