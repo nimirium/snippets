@@ -18,9 +18,9 @@ function initUi(allParties) {
         var div = "    <div id=\"party" + party.id + "\" class=\"mydiv\" style=\"top: " + top + "px; left: " + left + "px;\">\n" +
         "      <!-- Include a header DIV with the same name as the draggable DIV, followed by \"header\" -->\n" +
         "      <div id=\"partydivheader" + party.id + "\" class=\"mydivheader\">" + party.name + "</div>\n" +
-        "      <p><i class=\"fa fa-angle-up\"></i></p>\n" +
+        "      <p><i class=\"fa fa-angle-up\" id='partyup" + party.id + "'></i></p>\n" +
         "      <p>" + party.size + "</p>\n" +
-        "      <p><i class=\"fa fa-angle-down\"></i></p>\n" +
+        "      <p><i class=\"fa fa-angle-down\" id='partydown" + party.id + "'></i></p>\n" +
         "    </div>\n";
 
         addHtml = addHtml + div + "\n";
